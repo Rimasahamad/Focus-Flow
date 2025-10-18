@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FocusFlow — Pomodoro + Tasks</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="container header">
+    <h1>⏳ FocusFlow</h1>
+    <p class="muted">Pomodoro timer + task tracker (no login, no database)</p>
+  </header>
+
+  <main class="container grid">
+    <section class="card timer-card">
+      <div id="sessionLabel" class="label">Focus</div>
+      <div id="timeDisplay" class="time">25:00</div>
+      <div class="controls">
+        <button id="startBtn">Start</button>
+        <button id="pauseBtn" disabled>Pause</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+      <div class="options">
+        <label>Focus (min) <input id="focusMin" type="number" min="1" max="120" value="25"></label>
+        <label>Break (min) <input id="breakMin" type="number" min="1" max="60" value="5"></label>
+        <label>Long Break (min) <input id="longMin" type="number" min="5" max="90" value="15"></label>
+        <label>Intervals before long break <input id="intervals" type="number" min="1" max="8" value="4"></label>
+        <label><input id="autoContinue" type="checkbox" checked> Auto-continue</label>
+        <label><input id="soundToggle" type="checkbox" checked> Sound</label>
+      </div>
+      <audio id="ding" preload="auto">
+        <source src="assets/ding.mp3" type="audio/mpeg">
+      </audio>
+    </section>
+
+    <section class="card tasks-card">
+      <h2>Tasks</h2>
+      <form id="taskForm" class="row">
+        <input id="taskText" placeholder="What will you focus on?" required />
+        <input id="taskDue" type="date" />
+        <select id="taskTag">
+          <option value="">Tag</option>
+          <option>Study</option>
+          <option>Coding</option>
+          <option>Reading</option>
+          <option>Exercise</option>
+        </select>
+        <button>Add</button>
+      </form>
+      <div class="filters row">
+        <input id="search" placeholder="Search..." />
+        <select id="filterTag">
+          <option value="">All tags</option>
+          <option>Study</option>
+          <option>Coding</option>
+          <option>Reading</option>
+          <option>Exercise</option>
+        </select>
+        <select id="filterState">
+          <option value="all">All</option>
+          <option value="open">Open</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+      <ul id="taskList" class="list"></ul>
+      <div class="row actions">
+        <button id="exportBtn">Export JSON</button>
+        <button id="importBtn">Import JSON</button>
+        <input id="importFile" type="file" accept="application/json" hidden />
+        <button id="clearDoneBtn">Clear Done</button>
+      </div>
+    </section>
+
+    <section class="card stats-card">
+      <h2>Stats</h2>
+      <div class="stats">
+        <div class="stat"><div class="value" id="statFocus">0</div><div class="label">Focus sessions</div></div>
+        <div class="stat"><div class="value" id="statBreak">0</div><div class="label">Breaks</div></div>
+        <div class="stat"><div class="value" id="statTime">0m</div><div class="label">Total focused time</div></div>
+      </div>
+      <canvas id="weeklyChart" width="600" height="260"></canvas>
+      <p class="muted">Data is saved in your browser (localStorage). No account needed.</p>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <span>Made with ❤️ — FocusFlow</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
